@@ -14,5 +14,7 @@ A simple snake game by using HTML, CSS and JavaScript
 2. Press "Space" to restart the game
 
 ## 👑 Can Goku Beat it Tho?
-![My highScore](https://images2.imgbox.com/db/88/GeL38xvm_o.png)
+![My highScore](https://images2.imgbox.com/ef/e6/AmHrlPXc_o.png)
+
 ---
+
