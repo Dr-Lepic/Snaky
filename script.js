@@ -100,7 +100,7 @@ function drawHead(head){
 
 // drawing the game
 function draw(){
-    ctx.xlearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // drawing the food
     ctx.fillStyle = "red";
@@ -112,7 +112,7 @@ function draw(){
             drawHead(segment);
         } else {
             ctx.fillStyle = "lime";
-            ctx.fillReact(segment.x, segment.y, boxSize, boxSize);
+            ctx.fillRect(segment.x, segment.y, boxSize, boxSize);
             ctx.strokeStyle = "black";
             ctx.strokeRect(segment.x, segment.y, boxSize, boxSize);
         }
@@ -206,3 +206,12 @@ window.addEventListener("keydown", (event) => {
             break;
     }
 });
+
+// game loop
+function gameLoop(){
+    update();
+    draw();
+    setTimeout(gameLoop, 100);
+}
+
+gameLoop();
