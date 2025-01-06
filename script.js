@@ -173,5 +173,36 @@ function update(){
 // reset game
 function resetGame(){
     snake = [{ x: 200, y: 200 }];
+    direction = { x: 0, y: 0 };
+    score = 0;
+    gameOver = false;
+    food = {
+        x: randomPosition(canvas.width),
+        y: randomPosition(canvas.height),
+    }
+    scoreDisplay.textContent = `Score: ${score}`;
 }
 
+// handle key press
+window.addEventListener("keydown", (event) => {
+
+    if (gameOver && event.key === " ") {
+        resetGame();
+        return;
+    }
+
+    switch(event.key){
+        case "ArrowUp":
+            if (direction.y === 0) direction = { x: 0, y: -1 };
+            break;
+        case "ArrowDown":
+            if (direction.y === 0) direction = { x: 0, y: 1 };
+            break;
+        case "ArrowLeft":
+            if (direction.x === 0) direction = { x: -1, y: 0 };
+            break;
+        case "ArrowRight":
+            if (direction.x === 0) direction = { x: 1, y: 0 };
+            break;
+    }
+});
