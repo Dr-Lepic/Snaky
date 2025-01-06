@@ -17,6 +17,7 @@ let food = {
 
 let direction = { x: 0, y: 0 };
 let score = 0;
+let HighScore = 0;
 let gameOver = false;
 
 
@@ -94,5 +95,83 @@ function drawHead(head){
     ctx.moveTo(head.x + boxSize / 2, head.y +  boxSize / 2);
     ctx.lineTo(head.x + boxSize / 2, head.y + boxSize);
     ctx.stroke();
-    
+
 }
+
+// drawing the game
+function draw(){
+    ctx.xlearRect(0, 0, canvas.width, canvas.height);
+
+    // drawing the food
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x, food.y, boxSize, boxSize);
+
+    // Draw Snake
+    snake.forEach((segment, index) => {
+        if(index === 0){
+            drawHead(segment);
+        } else {
+            ctx.fillStyle = "lime";
+            ctx.fillReact(segment.x, segment.y, boxSize, boxSize);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(segment.x, segment.y, boxSize, boxSize);
+        }
+    })
+
+    // ""Game Over"" message
+    if(gameOver){
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over :(", canvas.width / 2, canvas.height / 2);
+        ctx.font = "20px Arial";
+        ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 30);
+    }
+
+} 
+
+// update snake's position
+function update(){
+    if(gameOver) return;
+
+    const head = { 
+        x: snake[0].x + direction.x * boxSize, 
+        y: snake[0].y + direction.y * boxSize, 
+    };
+
+    // check if snake eats the food
+    if(head.x === food.x && head.y === food.y){
+        score++;
+        scoreDisplay.textContent = `Score: ${score}`;
+        food = {
+            x: randomPosition(canvas.width),
+            y: randomPosition(canvas.height),
+        }
+    } else {
+        snake.pop();
+    }
+
+    // check for collision
+    if(
+        head.x < 0 ||
+        head.x >= canvas.width ||
+        head.y < 0 ||
+        head.y >= canvas.height ||
+        snake.some((segment) => segment.x === head.x && segment.y === head.y)
+    ){
+        gameOver = true;
+        draw();
+        if(score > HighScore){
+            HighScore = score;
+            highScoreDisplay.textContent = `High Score: ${HighScore}`;
+        }
+        return;
+    }
+    snake.unshift(head);
+}
+
+// reset game
+function resetGame(){
+    snake = [{ x: 200, y: 200 }];
+}
+
